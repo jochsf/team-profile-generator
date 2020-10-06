@@ -17,9 +17,9 @@
   install necessary packages using "npm install" then run code using "node index.js"
 
   ## Usage
-  Answer the prompts provided by the app. You can then open the webpage from the newly created index.html file in the 'dist' folder. From there you can click on an employee's github username to go directly to their page, or click on their email to populate the sender form of a new email. 
+  Creates website with detailed information about team members. Each employee card has relevant information and links to their github account or email ad
   
-  <img src="./assets/screenshot.png" width=800>
+  <img src="./assets/screenshot.PNG" width=800>
 
   [Walkthrough Video](https://drive.google.com/file/d/1PXv7ReWwKbPuo3MdPUYnUuZNFbNq2kmR/view)
   
@@ -34,4 +34,4 @@
   Licensed under the MIT license
 
   ## Questions? 
-  [my github](https://www.github.com/jochsf)
+  [Github](https://www.github.com/jochsf)
