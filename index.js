@@ -44,7 +44,7 @@ const managerPrompt = () => {
         {
             type: 'input',
             name: 'email',
-            message: "What is your team manager's email?",
+            message: "What is your email?",
             validate: emailInput => {
                 if (emailInput) {
                     return true;
@@ -56,10 +56,10 @@ const managerPrompt = () => {
         },
         {
             type: 'input',
-            name: 'officeNum',
-            message: "What is your team manager's office number?",
+            name: 'officeNumber',
+            message: "What is your office number?",
             validate: officeNumberInput => {
-                if (officenNumberInput) {
+                if (officeNumberInput) {
                     return true;
                 } else {
                     console.log('Please enter your office number!');
@@ -71,7 +71,9 @@ const managerPrompt = () => {
     )
         .then((response) => {
 
-            const manager = new Manager(response.name, response.id, response.email, response.officeNumber)
+            const manager = new Manager(response.name, response.id, response.email, response.role, response.officeNumber)
+            
+            manager.role = 'Manager'
 
             employeeList.push(manager)
 
@@ -84,19 +86,18 @@ const addMenu = () => {
     inquirer.prompt([
         {
             type: 'list',
-            name: 'addrole',
+            name: 'role',
             message: 'Please select type of member to add to your team.',
-            choices: ['Engineer', "Intern"]
+            choices: ["Engineer", "Intern"]
         }
-            .then(response => {
-                switch (response) {
-                    case "Engineer":
-                        addEngineer()
-                    case "Intern":
-                        addIntern()
-                }
-            })
     ])
+        .then((response) => {
+            if (response.role === "Engineer") {
+                addEngineer()
+            } else {
+                addIntern()
+            }
+        })
 }
 
 const addPrompt = () => {
@@ -107,16 +108,18 @@ const addPrompt = () => {
             message: "Would you like to add more employees?",
             choices: ['Yes', 'No']
         }
-
-            .then(response => {
-                switch (response) {
-                    case 'Yes':
-                        addMenu()
-                    case 'No'
-                        teamHTML()
-                }
-            })
     ])
+        .then(response => {
+            switch (response.add) {
+                case 'Yes':
+                    addMenu();
+                    break;
+                case 'No':
+                    teamHTML();
+                    break;
+            }
+        })
+
 
 }
 
@@ -163,7 +166,7 @@ const addEngineer = () => {
         },
         {
             type: 'input',
-            name: 'github',
+            name: 'gitHub',
             message: "What is the github username of the engineer?",
             validate: githubInput => {
                 if (githubInput) {
@@ -175,9 +178,10 @@ const addEngineer = () => {
             }
         },
     ])
-        .then(response => {
-            const engineer = new Engineer(response.name, response.id, response.email, response.github);
+        .then((response) => {
+            const engineer = new Engineer(response.name, response.id, response.email, response.role, response.gitHub);
 
+            engineer.role = "Engineer"
             employeeList.push(engineer);
 
             addPrompt();
@@ -239,8 +243,10 @@ const addIntern = () => {
             }
         },
     ])
-        .then(response => {
-            const intern = new Intern(response.name, response.id, response.email, response.school);
+        .then((response) => {
+            const intern = new Intern(response.name, response.id, response.email, response.role, response.school);
+
+            intern.role = 'Intern'
 
             employeeList.push(intern);
 
@@ -248,7 +254,7 @@ const addIntern = () => {
         })
 }
 
-function teamHTML() {
+const teamHTML = () => {
     fs.writeFile('./dist/index.html', generateHTML(employeeList), err => {
         if (err) {
             console.log(err)
