@@ -17,7 +17,7 @@
   install necessary packages using "npm install" then run code using "node index.js"
 
   ## Usage
-  Creates website with detailed information about team members. Each employee card has relevant information and links to their github account or email ad
+  Creates website with detailed information about team members. Each employee card has relevant information and links to their github account or email address.
   
   <img src="./assets/screenshot.PNG" width=800>
 
